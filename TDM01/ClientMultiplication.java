@@ -33,22 +33,22 @@ public class ClientMultiplication {
 	        socket.receive(dpR);
 	        String reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
 	        int a = Integer.parseInt(reponse.substring(0,1));
-
-	        System.out.println("Le serveur  a répondu "+ a + " et ");
+	        socket.receive(dpR);
+	        reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
+	        int b = Integer.parseInt(reponse.substring(0,1));
+	        System.out.println("Le serveur  a répondu "+ a + " et "+b);
 	        
-	     
-        	bufE = "0".getBytes();
-
-	        
-	        
+        	int result = a*b;
+        	String finalResult= ""+result;
+	        bufE = finalResult.getBytes();
         	dpE = new DatagramPacket(bufE, bufE.length, adrDest);
             socket.send(dpE);
             
         	// Attente de la reponse 
             bufR = new byte[2048];
-             dpR = new DatagramPacket(bufR, bufR.length);
+            dpR = new DatagramPacket(bufR, bufR.length);
 	        socket.receive(dpR);
-	         reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
+	        reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
 	        System.out.println("Le serveur  a répondu "+reponse);
             
         }
